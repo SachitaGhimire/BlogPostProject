@@ -1,0 +1,23 @@
+{% extends 'base.html'%}
+{%block content%}
+{%load static%}
+{% include 'header.html'%}
+
+<div class="container">
+<div class="row my-3">
+    <div class="col-md-6">
+         <a href="/blogDetails/{{blog_id}}" class="my-3">Go back</a>
+        <form action="/updateComment/{{e.id}}" method="post" class="my-2">
+            {% csrf_token%}
+            <label class="form-label my-1">Your Comment:</label>
+            <input type="hidden" value="{{blog_id}}" name="blog_id">
+            <input type="text" class="form-control my-3" name="editedComment" value="{{e.comment}}">
+            <input type="submit" value="update" class="btn btn-success">
+
+        </form>
+
+    </div>
+</div>
+</div>
+
+{%endblock%}

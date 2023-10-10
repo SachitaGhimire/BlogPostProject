@@ -1,0 +1,32 @@
+{% extends 'base.html'%}
+{%block content%}
+{% include 'header.html'%}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 login p-0">
+            <div class=" bg-primary py-1  text-center">
+                <h3 class="text-light">Login</h3>
+            </div>
+            <form action="signin" method="POST" class="p-4"> {% csrf_token %}
+{%for message in messages%}
+            <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-center" role="alert">
+                <strong>Message !</strong> {{message}}
+            </div>
+            {%endfor%}
+  <div class="mb-3">
+    <label for="username" class="form-label">Username</label>
+    <input type="text" class="form-control" id="username" name="username">
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" id="password" name="password">
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary">Submit</button>
+      <br>
+      <p class="my-3">Don't have account ?<a href="register" > click here</a></p>
+</form>
+        </div>
+    </div>
+</div>
+{%endblock%}

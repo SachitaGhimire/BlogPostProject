@@ -1,0 +1,40 @@
+{% extends 'base.html'%}
+{%block content%}
+{%load static%}
+{% include 'header.html'%}
+<div class="container my-3">
+    {% if blog %}
+
+{% for blog in blog%}
+    <a href="blogDetails/{{blog.id}}" class="text-dark a-tag">
+    <div class="row justify-content-start my-3">
+        <div class="col-md-8">
+            <div class="row items">
+                <div class="col-md-8">
+                    <div class="profile my-2">
+                         <img src="{% static 'user.png'%}" alt="">
+                        <span>{{blog.user}}</span>
+                    </div>
+                    <h2 class="title">
+                        {{blog.title}}
+                    </h2>
+                    <p class="p-0">
+                       {{blog.subtitle}}
+                    </p>
+                    <span class="date">{{blog.dateTime}}</span>
+                </div>
+                <div class="col-md-4 p-image">
+<!--                        <img src="{% static 'test.png'%}" alt="">-->
+                             <img src="{{blog.image.url}}" alt="">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </a>
+    {%endfor%}
+    {%else%}
+    <img src="{% static 'no.gif'%}" alt="" class="noResult">
+    {%endif%}
+</div>
+{%endblock%}

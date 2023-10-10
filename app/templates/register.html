@@ -1,0 +1,50 @@
+{% extends 'base.html'%}
+{%block content%}
+{% include 'header.html'%}
+<div class="container my-3">
+    <div class="row justify-content-center">
+        <div class="col-md-6 register p-0 ">
+            <div class="py-1 bg-primary text-center">
+                <h3 class="text-light">Register Now</h3>
+            </div>
+            {%for message in messages%}
+            <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-center" role="alert">
+                <strong>Message !</strong> {{message}}
+            </div>
+            {%endfor%}
+            <form class=" px-4 py-4" action="register" method="POST"> {% csrf_token %}
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username">
+        </div>
+        <div class="mb-3">
+            <label for="first_name" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="first_name" name="first_name">
+        </div>
+        <div class="mb-3">
+            <label for="last_name" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="last_name" name="last_name">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" name="email">
+        </div>
+        <div class="mb-3">
+            <label for="password1" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password1" name="password1">
+        </div>
+        <div class="mb-3">
+            <label for="password2" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="password2" name="password2">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+                <br>
+      <p class="my-3">Already have account ?<a href="signin" > click here</a></p>
+
+</form>
+        </div>
+    </div>
+
+</div>
+
+{%endblock%}

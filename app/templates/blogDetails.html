@@ -1,0 +1,164 @@
+{% extends 'base.html'%}
+{%block content%}
+{%load static%}
+{% include 'header.html'%}
+<div class="container details my-4">
+    <div class="row">
+        {%for message in messages%}
+        <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-center" role="alert">
+            <strong>Message !</strong> {{message}}
+        </div>
+        {%endfor%}
+        <div class="col-md-8 detail">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row align">
+                        <div class="col-md-auto">
+                            {% if p%}
+                            <img class="img" src="{{p.image.url}}" alt="">
+                            {%else%}
+                            <img class="img" src="{% static 'pic.png'%}" alt="">
+                            {%endif%}
+
+                        </div>
+                        <div class="col-md">
+                            <div class="user-name">
+                                <h5>{{blog.user}}</h5>
+                            </div>
+                            <div class="posted-date">{{blog.dateTime}}</div>
+                        </div>
+                    </div>
+                </div>
+                {% if p.facebook %}
+                <div class="col-md d-flex justify-content-end icons">
+
+                    <a href="{{p.facebook}}"><i class="fa-brands fa-facebook"></i></a>
+                    {%endif%}
+                    {% if p.twitter %}
+                    <a href="{{p.twitter}}"><i class="fa-brands fa-twitter mx-2"></i></a>
+                    {%endif%}
+                    {% if p.github %}
+
+                    <a href="{{p.github}}"><i class="fa-brands fa-github mx-2"></i></a>
+                </div>
+                {%endif%}
+
+            </div>
+            <div class="row my-3">
+                <div class="col-md-auto">
+                    <h3 class="title">{{blog.title}}</h3>
+                    <h5 class="subtitle">{{blog.subtitle}}</h5>
+                </div>
+            </div>
+            <div class="my-3">
+                <img src="{{blog.image.url}}" alt="" class="w-100">
+            </div>
+            <div class="my-3 description">
+                <p>{{blog.content | safe}}</p>
+            </div>
+            <hr>
+            <div class="my-3 comment mx-1">
+                {% if user.is_authenticated %}
+                <form action="/comment" method="post" class="d-flex">
+                    {%csrf_token%}
+                    <input type="hidden" value="{{blog.id}}" name="id">
+                    <div class="input-group  w-50 ">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-comment"></i></span>
+                        <input type="text" name="comment" class="form-control" placeholder="comments" required>
+                    </div>
+                    <button class="btn btn-info mx-3" type="submit">submit</button>
+                </form>
+                {%else%}
+                <a href="/signin">Add comments</a>
+                {%endif%}
+            </div>
+            <hr>
+            <h3>Comments..</h3>
+            {% if c%}
+            {% for c in c %}
+            <div class="row cmt my-2 mx-1">
+                <div class="col-md">
+                    <div class="capital cmt_title">{{c.user}}<span class="mx-2">{{c.time}}</span></div>
+                    <div class="capital">
+                        <p>{{c.comment}}</p>
+                    </div>
+                </div>
+                {% if c.user == request.user%}
+                <div class="d-none edit">
+                    <div class="row">
+                        <div class="col-md-auto">
+                            <form action="/editComment/{{c.id}}" method="post">
+                                {%csrf_token%}
+                                <input type="hidden" value="{{blog.id}}" name="blog_id">
+                                <button type="submit" class="text-dark editbtn"><i
+                                        class="fa-solid fa-pen-to-square"></i></button>
+                            </form>
+                        </div>
+                        <div class="col-md-auto">
+                            <form action="/deleteComment/{{c.id}}" method="post">
+                                {%csrf_token%}
+                                <input type="hidden" value="{{blog.id}}" name="blog_id">
+                                <button type="submit" class="deletebtn"><i class="fa-solid fa-trash-can"></i></button>
+                            </form>
+                        </div>
+                    </div>
+
+
+                </div>
+                {%endif%}
+            </div>
+            {%endfor%}
+            {%else%}
+            <span>No comments</span>
+            {%endif%}
+        </div>
+    </div>
+</div>
+
+
+<h1 class="row rmd my-2" style="height: 18rem;"">Recommended blog</h1>
+<hr>
+
+    {% for b in recommend %}
+    <div class="row my-4">
+        <h1>{{blog.title}}</h1>
+    </div>
+ 
+    <!-- <div class="col-md-4">
+        <div class="card mx-auto mb-3" id="{{blog.id}}" style="width: 18rem;">
+           
+            <a href="/detail/{{blog.id}}">
+                {% if blog.image%}
+                <img class="card-img-top" src="{{blog.image}}" alt="Card image cap">
+                {%else%}
+                <img class="card-img-top" src="{% static 'image/dummy.png'%}" alt="Card image cap">
+                {%endif%}
+            </a>
+            <div class="card-body">
+                <p class="card-title">{{blog.title}}</p>
+               {{blog.content}}
+            </div>
+            <div class="card-footer p-0  no-gutters">
+
+                <div class="row no-gutters">
+                    <form action="/#{{blog.id}}" class="col-2" method="post">
+                        {% csrf_token %}
+                        <input hidden type="text" name="product" value='{{blog.id}}'>
+                        <input hidden type="text" name="remove" value="True">
+                        <input type="submit" value="-" class="btn btn-block btn-secondary border-right">
+                    </form>
+
+                    </form>
+                </div>
+                <form action="/#{{blog.id}}" method="POST" class="btn-block">
+                    {% csrf_token %}
+                    <input hidden type="text" name="blog" value='{{blog.id}}'>
+                </form>
+
+            </div>
+        </div>
+    </div> -->
+    {%endfor%}
+<!-- </div> -->
+
+{%endblock%}

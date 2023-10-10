@@ -1,0 +1,51 @@
+{% extends 'base.html'%}
+{%block content%}
+{%load static%}
+{% include 'header.html'%}
+<div class="back">
+    <div class="container text-center">
+        <div class="row p-5">
+            <div>
+                <h2>Stay Curious.</h2>
+            </div>
+            <div>
+                <h3>Discover stories, thinking, and expertise from writers on any topic.</h3>
+            </div>
+            <div>
+                <a href="" class="btn btn-dark startreading">Start reading</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container my-3">
+    {% for blog in blog%}
+    <a href="blogDetails/{{blog.id}}" class="text-dark a-tag">
+        <div class="row justify-content-start my-3">
+            <div class="col-md-8">
+                <div class="row items">
+                    <div class="col-md-8">
+                        <div class="profile my-2">
+                            <img src="{% static 'user.png'%}" alt="">
+                            <span>{{blog.user}}</span>
+                        </div>
+                        <h2 class="title">
+                            {{blog.title}}
+                        </h2>
+                        <p class="p-0">
+                            {{blog.subtitle}}
+                        </p>
+                        <span class="date">{{blog.dateTime}}</span>
+                    </div>
+                    <div class="col-md-4 p-image">
+                        <!--                        <img src="{% static 'test.png'%}" alt="">-->
+                        <img src="{{blog.image}}" alt="{{blog.title}}">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </a>
+    {%endfor%}
+</div>
+{% include 'pagination.html'%}
+{%endblock%}

@@ -1,0 +1,17 @@
+<nav aria-label="..." class="d-flex justify-content-center my-5">
+  <ul class="pagination">
+      {% if blog.has_previous %}
+    <li class="page-item ">
+      <a class="page-link" href="?page={{blog.previous_page_number}}">Previous</a>
+    </li>
+      {% endif %}
+    <li class="page-item active">
+        <a class="page-link " href="">{{ blog.number }}</a>
+    </li>
+      {% if blog.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{blog.next_page_number}}">Next</a>
+    </li>
+      {% endif %}
+  </ul>
+</nav>
